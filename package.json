@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack serve --config=webpack.dev.js",
+    "build": "webpack --config=webpack.prod.js"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
