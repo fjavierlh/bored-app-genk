@@ -6,7 +6,20 @@
   "scripts": {
     "start": "webpack serve --config=webpack.dev.js",
     "build": "webpack --config=webpack.prod.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "lint": "semistandard --fix"
+  },
+  "semistandard": {
+    "globals": [
+      "describe",
+      "context",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "it",
+      "expect"
+    ]
   },
   "jest": {
     "transform": {
