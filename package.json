@@ -9,6 +9,9 @@
     "test": "jest --coverage",
     "lint": "semistandard --fix"
   },
+  "commitlint": {
+    "extends": "@commitlint/config-conventional"
+  },
   "semistandard": {
     "globals": [
       "describe",
