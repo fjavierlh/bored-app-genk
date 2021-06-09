@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ActivityRepository } from "./activity.respository";
+import { ActivityRepository } from "./activity.repository";
 import { RANDOM_ACTIVITY } from '../../../fixtures/random-activity.fixture';
 jest.mock('axios');
 
