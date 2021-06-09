@@ -3,9 +3,17 @@ import axios from "axios";
 export class ActivityRepository {
 
     constructor() {
-        this.API_URL = 'http://www.boredapi.com/api/activity/';
+
+        this.API_URL = new URL('http://www.boredapi.com/api/activity/');
+    
     }
 
-    getRandomActivity = async () => await axios.get(this.API_URL);
+    async getRandomActivity(URLParams) {
+
+        this.API_URL.search = new URLSearchParams(URLParams);
+        
+        return await axios.get(this.API_URL.toString());
+
+    }
 
 }
