@@ -6,26 +6,33 @@ jest.mock('axios');
 describe("ActivityRepository", () => {
   
     beforeEach(() => {
-    axios.mockClear();
-  });
 
-  it("Should return an object with a ramdom activity", async () => {
+        axios.mockClear();
 
-    axios.get = jest.fn().mockResolvedValue(RANDOM_ACTIVITY);
+    });
 
-    const activityRepository = new ActivityRepository();
-    const expectedObjectKeys = [
-      "accessibility",
-      "activity",
-      "key",
-      "link",
-      "participants",
-      "price",
-      "type",
-    ];
-    const resultGet = await activityRepository.getRandomActivity();
-    const resultObjectKeys = Object.keys(resultGet.data).sort();
+    it("Should load an object with a ramdom activity from API", async () => {
 
-    expect(resultObjectKeys).toEqual(expectedObjectKeys);
-  });
+        axios.get = jest.fn().mockResolvedValue(RANDOM_ACTIVITY);
+
+        const activityRepository = new ActivityRepository();
+        const expectedObjectKeys = [
+
+            "accessibility",
+            "activity",
+            "key",
+            "link",
+            "participants",
+            "price",
+            "type"
+
+        ].sort();
+
+        const resultGetActivity = await activityRepository.getRandomActivity();
+        const resultObjectKeys = Object.keys(resultGetActivity.data).sort();
+
+        expect(resultObjectKeys).toEqual(expectedObjectKeys);
+
+    });
+
 });
