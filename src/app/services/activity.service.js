@@ -6,9 +6,13 @@ export class ActivityService {
         this.repository = new ActivityRepository();
     }
 
-    async getRandomActivity(URLParams) {
+    async getRandomActivity(formData={}) {
 
-        return await this.repository.getRandomActivity(URLParams);
+        const URLparams = Object.fromEntries(
+            Object.entries(formData).filter(([_, value]) => value)
+        );
+
+        return await this.repository.getRandomActivity(URLparams);
         
     }
 
