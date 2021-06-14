@@ -1,3 +1,4 @@
 import './main.css';
-
-console.log('Hi! I\'m webpack vanilla starter!👋');
+import { router } from './router';
+import { WelcomePage } from './app/pages/welcome.page';
+import { MainPage } from './app/pages/main.page';

@@ -1,9 +1,145 @@
+/*=====================
+    Table of contents
+  =====================
+
+  #1. CSS Variables
+
+  #2. General elements
+
+  #3. Layout
+
+  #4. Header
+
+  #5. Content
+
+  #6. Footer
+
+*/
+
+/*=================
+  #1. CSS variables
+  =================*/
+
 :root {
-    --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    --color-primary-100: hsl(171, 34%, 64%);
+  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --color-primary-100: hsl(171, 34%, 64%);
 }
 
-body {
-    font-family: var(--font-primary);
-    background-color: var(--color-primary-100);
+/*===================
+  2. General elements
+  ===================*/
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  overflow: hidden;
+  font-family: var(--font-primary);
+  background-color: azure;
+}
+
+/*=================
+    3. Typography
+  =================*/
+
+a {
+  text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+
+/*===============
+    4. Layout
+  ===============*/
+
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1 100%;
+  min-height: 100vh;
+  display: flex;
+}
+
+.content > * {
+  flex: 1 100%;
+}
+
+/*===============
+    5. Header
+  ===============*/
+
+/*===============
+    6. Content
+  ===============*/
+
+/*===============
+    7. Footer
+  ===============*/
+
+/*================
+    8. Animations
+  ================*/
+
+.primary-layout-entering {
+  animation: 2s fadeIn alternate;
+}
+
+.primary-layout-leaving {
+  animation: 2s fadeOut alternate;
+}
+
+@keyframes fadeOut {
+  0% {
+    width: 100%;
+    transform: translateY(0%);
+    z-index: 1;
+  }
+
+  10% {
+    width: 100%;
+    transform: translateY(5%);
+    z-index: 1;
+  }
+
+  100% {
+    width: 100%;
+    transform: translateY(-120%);
+    z-index: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    width: 100%;
+    transform: translateY(100%);
+  }
+
+  10% {
+    width: 100%;
+    transform: translateY(95%);
+  }
+
+  100% {
+    width: 100%;
+    transform: translateY(0%);
+  }
 }
