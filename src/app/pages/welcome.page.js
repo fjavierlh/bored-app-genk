@@ -18,18 +18,33 @@ export class WelcomePage extends LitElement {
     return css`
       :host {
         display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background-color: #fff;
-        box-shadow:  0 1em 1em rgba(0,0,0,0.3);
+        min-height: 100%;
+        
       }
 
+      
+
       :host > div {
-        flex-grow: 1 100%;
-        background-color: whitesmoke;
-        border-radius: 1em;
+        display: block;
+        margin: 0 auto;
+        padding: 3em;
+        margin-top: 30%;
+      }
+
+      .welcome-message {
+        text-align: center;
+        animation: 2s fadeInWelcome;
+      }
+
+      @keyframes fadeInWelcome {
+        from {
+          opacity: 0;
+          margin-top: -50%;
+          
+        } to {
+          opacity: 1;
+          /* margin-top: 0%; */
+        }
       }
 
       #push-button {
@@ -55,27 +70,23 @@ export class WelcomePage extends LitElement {
         opacity: 0;
         content: " >>";
         transition: all 0.5s;
-
       }
 
       #push-button:hover::after {
         margin-left: 0;
         opacity: 1;
-        
       }
-
-      @keyframes backgroundOut {
-        100% {
-          background-color: linear-gradient(left, red, rgba(255,255,255,1));
-        }
-      } 
     `;
   }
 
   render() {
     return html`
-      ${unsafeHTML(`${this._createHeadings().join("")}`)}
-      <a id="push-button" href="/main-page">Push</a>
+      <div>
+        <div class="welcome-message">
+          ${unsafeHTML(`${this._createHeadings().join("")}`)}
+          <a id="push-button" href="/main-page">Push</a>
+        </div>
+      </div>
     `;
   }
 
