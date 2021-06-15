@@ -1,4 +1,6 @@
 import { html, css, LitElement } from "lit";
+import  commonPageStyles  from "./common.styles";
+
 
 export class MainPage extends LitElement {
   constructor() {
@@ -7,16 +9,16 @@ export class MainPage extends LitElement {
 
   static get styles() {
     return css`
-      :host {
-        display: flex;
-        min-height: 100vh;
-        background-color: darkkhaki;
-      }
-
-      :host > div {
-        flex: 1 100%;
-        padding: 3em;
-      }
+    :host {
+      width: 100%;
+      display: flex;
+      min-height: 100%;
+    }
+    
+    :host > div {
+      flex: 1 100%;
+      padding: 3em;
+    }
 
     `;
   }
@@ -30,11 +32,7 @@ export class MainPage extends LitElement {
     <div>
       <h1>Main page</h1>
       <a href="/">Go back</a>
-      <p>Hi! This is a main page</p>
-      <p>Hi! This is a main page</p>
-      <p>Hi! This is a main page</p>
-      <p>Hi! This is a main page</p>
-      <p>Hi! This is a main page</p>
+      <activity-options-panel></activity-options-panel>
     </div>
     `;
   }
