@@ -42,7 +42,6 @@ body,
 html {
   overflow: hidden;
   font-family: var(--font-primary);
-  background-color: azure;
 }
 
 /*=================
@@ -68,19 +67,9 @@ h6 {
   ===============*/
 
 .container {
-  display: flex;
+  display: block;
   width: 100%;
   min-height: 100vh;
-}
-
-.content {
-  flex: 1 100%;
-  min-height: 100vh;
-  display: flex;
-}
-
-.content > * {
-  flex: 1 100%;
 }
 
 /*===============
@@ -109,33 +98,27 @@ h6 {
 
 @keyframes fadeOut {
   0% {
-    width: 100%;
     transform: translateY(0%);
-    z-index: 1;
   }
 
   10% {
-    width: 100%;
     transform: translateY(5%);
-    z-index: 1;
   }
 
   100% {
-    width: 100%;
     transform: translateY(-120%);
-    z-index: 1;
   }
 }
 
 @keyframes fadeIn {
   0% {
     width: 100%;
-    transform: translateY(100%);
+    transform: translateY(-100%);
   }
 
   10% {
     width: 100%;
-    transform: translateY(95%);
+    transform: translateY(-95%);
   }
 
   100% {
