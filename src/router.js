@@ -22,6 +22,7 @@ router.setRoutes([
       },
     ],
   },
+  { path: "(.*)", redirect: "/main-page"}
 ]);
 /*
 router.setRoutes([
