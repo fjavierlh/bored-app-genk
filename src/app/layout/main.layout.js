@@ -11,9 +11,10 @@ export class MainLayout extends LitElement {
       div {
         min-height: 100vh;
         display: grid;
-        grid-template-rows: 7em auto 50px;
-        grid-template-areas: "h" "s" "f";
-
+        grid-template-rows: 5em auto;
+        grid-template-areas:
+          "h"
+          "s";
       }
 
       header {
@@ -21,23 +22,24 @@ export class MainLayout extends LitElement {
         /* background-color: teal; */
         grid-area: h;
       }
-      header, footer {
+      header,
+      footer {
+        background-color: #fff;
         z-index: 1;
-
       }
 
       #nav {
-        z-index: 2;
+        z-index: 3;
         display: block;
         width: 100vw;
         min-height: 100vh;
         position: fixed;
         top: 0;
         left: -100%;
-        background-color: grey;
-        transition: left .4s ease-in-out;
+        background-color: #38a1ff;
+        transition: left 0.4s ease-in-out;
       }
-      
+
       .open {
         left: 0% !important;
       }
@@ -45,9 +47,6 @@ export class MainLayout extends LitElement {
       .toggle {
         width: 4em;
         height: 4em;
-        /* background-color: #000;
-        border: none; */
-
         background: none;
         color: inherit;
         border: none;
@@ -58,23 +57,26 @@ export class MainLayout extends LitElement {
       }
 
       .toggle::after {
+        display: block;
         font-size: 3em;
         position: fixed;
-        top: .3em;
+        top: 0.3em;
       }
 
-      .toggle-open::after, .toggle-close::after {
-        top: .5em;
-        left: .5em;
-        
+      .toggle-open::after,
+      .toggle-close::after {
+        left: 0.5em;
       }
       .toggle-open::after {
-
         content: "☰";
       }
 
       .toggle-close::after {
-
+        color: #fff;
+        content: "✖";
+      }
+      .toggle-close::after:hover {
+        background-color: red;
         content: "✖";
       }
 
@@ -92,7 +94,7 @@ export class MainLayout extends LitElement {
         grid-area: f;
       }
 
-      @media (min-width: 1000px) {
+      @media (min-width: 600px) {
         .toggle {
           display: none;
         }
@@ -126,21 +128,18 @@ export class MainLayout extends LitElement {
   constructor() {
     super();
     this.openNav = false;
-
   }
 
-  _toggleMenu(e) {
+  _toggleMenu() {
     this.openNav = !this.openNav;
   }
 
   render() {
     return html`
-      
       <div>
-        <header>
-        </header>
+        <header></header>
 
-        <nav id="nav" class="${this.openNav ? "open" : ""}">
+        <nav part="nav" id="nav" class="${this.openNav ? "open" : ""}">
           <button
             class="toggle toggle${!this.openNav ? "-open" : "-close"}"
             @click=${(e) => {
@@ -149,28 +148,30 @@ export class MainLayout extends LitElement {
           ></button>
           <ul>
             <li>
-              <a href="#">Link</a>
+              <a
+                href="/"
+                @click=${(e) => {
+                  this._toggleMenu(e);
+                }}
+                >Welcome</a
+              >
             </li>
             <li>
-              <a href="#">Link</a>
-            </li>
-            <li>
-              <a href="#">Link</a>
-            </li>
-            <li>
-              <a href="#">Link</a>
+              <a
+                href="/main-apge"
+                @click=${(e) => {
+                  this._toggleMenu(e);
+                }}
+                >Main page</a
+              >
             </li>
           </ul>
-          
+          <footer part="footer">Made with love by @fjavierlh</footer>
         </nav>
-        <section>
+        <section part="section">
           <slot></slot>
         </section>
-        <aside>
-        </aside>
-        <footer>
-          soy un footer
-        </footer>
+        <aside part="aside"></aside>
       </div>
     `;
   }
