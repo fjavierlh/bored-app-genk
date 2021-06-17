@@ -1,9 +1,10 @@
 import { html, css, LitElement } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html";
+import MainImage from "../img/waiting.webp";
 
 export class WelcomePage extends LitElement {
   static get properties() {
     return {
+      image: { type: String },
       bigTitle: { type: String },
       buttonText: { type: String },
     };
@@ -11,49 +12,94 @@ export class WelcomePage extends LitElement {
 
   constructor() {
     super();
-    this.bigTitle = "Hi! Welcome!";
+    this.bigTitle = "BORED?";
+    this.image = MainImage;
   }
 
   static get styles() {
     return css`
       :host {
         display: flex;
+        width: 100%;
         min-height: 100%;
         
       }
-
       
-
-      :host > div {
-        display: block;
-        margin: 0 auto;
-        padding: 3em;
-        margin-top: 30%;
+      .welcome-message {
+        display: flex;
+        width: 100%;
+        margin: 2em;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        animation: 2s fadeInWelcome;
       }
 
-      .welcome-message {
-        text-align: center;
-        animation: 2s fadeInWelcome;
+      .welcome-message * {
+        margin: 0;
+      }
+
+      img {
+        width: 70%;
+        max-width: 400px;
+        animation: 2s imgIn;
+      }
+      @keyframes imgIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .welcome-message h1 {
+        /* height: 100%; */
+        font-size: 2.8rem;
+      }
+      .welcome-message h1 span {
+        position: relative;
+        font-size: 5rem;
+        float: right;
+        top: -0.3em;
+        right: 0.1em;
+        margin-bottom: -0.3em;
+        color: hsl(208.3, 100%, 61%);
+        animation: 5s bounceMove infinite;
+      }
+
+      @keyframes bounceMove {
+        0% {
+          transform: rotate(10deg);
+        }
+        50% {
+          transform: rotate(-10deg);
+        }
+        100% {
+          transform: rotate(10deg);
+        }
       }
 
       @keyframes fadeInWelcome {
         from {
           opacity: 0;
           margin-top: -50%;
-          
-        } to {
+        }
+        to {
           opacity: 1;
           /* margin-top: 0%; */
         }
       }
 
       #push-button {
+        display: block;
         font-size: 1.2em;
         font-weight: bold;
         color: #000;
         text-align: center;
         width: 4em;
         padding: 0.5em;
+        border: 0; 
         text-decoration: none;
         border: solid 0.2em #000;
         border-radius: 5em;
@@ -81,11 +127,14 @@ export class WelcomePage extends LitElement {
 
   render() {
     return html`
-      <div>
-        <div class="welcome-message">
-          ${unsafeHTML(`${this._createHeadings().join("")}`)}
-          <a id="push-button" href="/main-page">Push</a>
-        </div>
+      <div class="welcome-message">
+        <img class="main-image" src="${this.image}" />
+        <h1>
+          ${this.bigTitle.substring(0, 5)}<span
+            >${this.bigTitle.charAt(this.bigTitle.length - 1)}</span
+          >
+        </h1>
+        <a id="push-button" href="/main-page">Push</a>
       </div>
     `;
   }
