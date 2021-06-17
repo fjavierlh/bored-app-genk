@@ -1,19 +1,18 @@
 import axios from "axios";
 
 export class ActivityRepository {
+  constructor() {
+    this.defaultParams = {
+      minprice: 0,
+      minaccessibility: 0,
+    };
 
-    constructor() {
+    this.API_URL = new URL("http://www.boredapi.com/api/activity/");
+  }
 
-        this.API_URL = new URL('http://www.boredapi.com/api/activity/');
-    
-    }
-
-    async getRandomActivity(URLParams) {
-
-        this.API_URL.search = new URLSearchParams(URLParams);
-        
-        return await axios.get(this.API_URL.toString());
-
-    }
-
+  async getRandomActivity(URLParams) {
+    const allParams = { ...URLParams, ...this.defaultParams };
+    this.API_URL.search = new URLSearchParams(allParams);
+    return await axios.get(this.API_URL.toString());
+  }
 }
