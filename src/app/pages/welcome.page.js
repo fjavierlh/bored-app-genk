@@ -19,16 +19,15 @@ export class WelcomePage extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
-        width: 100%;
+        display: block;
         min-height: 100%;
-        
       }
       
       .welcome-message {
         display: flex;
+        position: absolute;
         width: 100%;
-        margin: 2em;
+        min-height: 100%;
         flex-flow: column wrap;
         justify-content: center;
         align-items: center;
@@ -82,12 +81,10 @@ export class WelcomePage extends LitElement {
 
       @keyframes fadeInWelcome {
         from {
-          opacity: 0;
-          margin-top: -50%;
+          transform: translateY(20%);
         }
         to {
-          opacity: 1;
-          /* margin-top: 0%; */
+          transform: translateY(0%);
         }
       }
 
