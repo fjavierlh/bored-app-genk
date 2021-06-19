@@ -27,7 +27,7 @@ export class WelcomePage extends LitElement {
         display: flex;
         position: absolute;
         width: 100%;
-        min-height: 100%;
+        min-height: 80%;
         flex-flow: column wrap;
         justify-content: center;
         align-items: center;
@@ -140,15 +140,7 @@ export class WelcomePage extends LitElement {
     super.connectedCallback();
   }
 
-  _createHeadings() {
-    const generatedHeadings = this.bigTitle.split(" ").map((word) => {
-      const headingSize = word.length < 5 ? 1 : 4;
-
-      return `<h${headingSize}>${word}</h${headingSize}>`;
-    });
-
-    return generatedHeadings;
-  }
+  _
 }
 
 customElements.define("welcome-page", WelcomePage);
