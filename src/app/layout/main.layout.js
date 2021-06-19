@@ -94,7 +94,7 @@ export class MainLayout extends LitElement {
         grid-area: f;
       }
 
-      @media (min-width: 600px) {
+      @media (min-width: 812px) {
         .toggle {
           display: none;
         }
