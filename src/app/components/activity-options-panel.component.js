@@ -20,6 +20,7 @@ export class ActivityOptionsPanel extends LitElement {
 
   static get styles() {
     return css`
+
       :host {
         display: block;
       }
@@ -138,6 +139,11 @@ export class ActivityOptionsPanel extends LitElement {
         margin-bottom: -0.3em;
       }
 
+      #notification-message {
+      --nm-wrapper-show-position-bottom: -50%;
+      --nm-wrapper-show-position-top: 50%;
+      }
+
       @keyframes fadeInToggleOptions {
         0% {
           transform: translateX(125%);
@@ -215,12 +221,18 @@ export class ActivityOptionsPanel extends LitElement {
 
     this.toggleOptions = this.shadowRoot.querySelector(".toggle-options");
     this.applyButton = this.shadowRoot.querySelector("#apply-button");
-
-    [this.toggleOptions, this.applyButton].forEach((element) => {
-      element.addEventListener("click", (e) => this._toggleOptionsPanel(e));
-    });
-
     this.resetButton = this.shadowRoot.querySelector("#reset-button");
+
+    [this.toggleOptions, this.applyButton, this.resetButton].forEach(
+      (element) => {
+        element.addEventListener("click", (e) => this._toggleOptionsPanel(e));
+      }
+    );
+
+    this.applyButton.addEventListener("click", () =>
+      this._loadNotification("options applied successfully", "success")
+    );
+
     this.resetButton.addEventListener("click", (e) => this._resetOptions(e));
   }
 
@@ -296,7 +308,16 @@ export class ActivityOptionsPanel extends LitElement {
           <button id="reset-button">RESET</button>
         </div>
       </div>
+      <notification-message id="notification-message"></notification-message>
     `;
+  }
+
+  _loadNotification(message, type, position) {
+    const notificationMessage = this.shadowRoot.getElementById(
+      "notification-message"
+    );
+    console.log(notificationMessage);
+    return notificationMessage._pushNotification(message, type, position);
   }
 
   _handleOptions() {
@@ -337,6 +358,7 @@ export class ActivityOptionsPanel extends LitElement {
       this.price =
         null;
     this.requestUpdate();
+    this._loadNotification("Options reseted", "info");
   }
 }
 
