@@ -1,4 +1,4 @@
-import { css, html, LitElement } from "lit";
+import { css, html, LitElement, supportsAdoptingStyleSheets } from "lit";
 
 export class ActivityOptionsPanel extends LitElement {
   constructor() {
@@ -15,6 +15,7 @@ export class ActivityOptionsPanel extends LitElement {
       "music",
       "busywork",
     ];
+    this.toggleOptions = null;
   }
 
   static get styles() {
@@ -22,19 +23,28 @@ export class ActivityOptionsPanel extends LitElement {
       :host {
         display: block;
       }
+
       .options-panel {
         position: fixed;
-        z-index: 3;
-        width: 100vw;
-        min-height: 100vh;
-        transform: translateX(60%);
-        top: 0%;
+        width: 100%;
+        max-width: 812px;
+        left: 0%;
+        bottom: 0%;
+        z-index: 1;
+        transform: translateY(100%);
+        overflow-y: auto;
+
         display: flex;
         flex-flow: column wrap;
         justify-content: flex-end;
 
+        opacity: 0;
         background-color: #38a1ff;
-        transition: transform 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .options-panel-title {
+        text-align: center;
       }
 
       .input-wrapper {
@@ -42,33 +52,44 @@ export class ActivityOptionsPanel extends LitElement {
         flex-flow: row wrap;
         justify-content: space-between;
 
-        margin: 1em;
+        margin: 1em 1.5em auto;
       }
-      .options-panel label {
+      .input-wrapper label {
         display: flex;
         color: #fff;
         flex: 80%;
         margin-bottom: 0.5em;
       }
-      .options-panel select {
+
+      .input-wrapper select {
         width: 100%;
         font-size: 1.2em;
         padding: 0.5em;
       }
-      .options-panel input {
+
+      .input-wrapper input {
         flex: 3;
       }
 
-      .options-panel span {
+      .parameter-info {
         margin-left: 0.5em;
-        flex: 1 0% 4em;
+        flex: 1 0% 3.5em;
+
         display: flex;
+        flex-flow: row wrap;
         justify-content: center;
-        align-items: center;
-        width: 4em;
-        height: 4em;
+        width: 3.5em;
+        height: 3.5em;
         background-color: #fff;
         border-radius: 0.5em;
+
+        text-align: center;
+      }
+
+      .parameter-info p {
+        margin: 0;
+        flex: 1 100%;
+        font-size: 0.9em;
       }
 
       .buttons-wrapper {
@@ -76,51 +97,83 @@ export class ActivityOptionsPanel extends LitElement {
         margin-top: 1.5em;
         display: flex;
         justify-content: space-evenly;
-        margin-top: auto;
-        margin-bottom: 2em;
+        margin-bottom: 1em;
       }
 
       .buttons-wrapper button {
         color: white;
         font-family: inherit;
         padding: 1em 3em;
+        border: none;
+        font: inherit;
+        cursor: pointer;
 
         background-color: #000;
         border: none;
       }
 
       .toggle-options-open {
-        transform: translateX(-50%);
+        opacity: 1;
+        transform: translateY(-4%);
       }
 
       .toggle-options {
-        z-index: 2;
+        z-index: 1;
         position: fixed;
         top: 1.5em;
         right: 1em;
-        border: none;
         background: #000;
         color: #fff;
-        border: none;
         padding: 0.5em;
+        border: none;
         font: inherit;
         cursor: pointer;
-        animation: 4s fadeIn;
+        animation: 3s fadeInToggleOptions;
       }
 
-      @keyframes fadeIn {
+      .emoji {
+        flex: 1 100%;
+        font-size: 1.2em;
+        margin-top: 0.3em;
+        margin-bottom: -0.3em;
+      }
+
+      @keyframes fadeInToggleOptions {
         0% {
-          display: none;
-          opacity: 0;
+          transform: translateX(125%);
         }
-        50% {
-          display: none;
-          opacity: 0;
+        80% {
+          transform: translateX(125%);
         }
+        95% {
+          transform: translateX(5%);
+        }
+
+        90% {
+          transform: translateX(-5%);
+        }
+
         100% {
-          opacity: 1;
+          transform: translateX(0%);
         }
       }
+
+      @media (min-width: 812px) {
+        
+        .options-panel {
+          z-index: 0;
+          width: 100%;
+          max-width: 25em;
+          right: 0%;
+          top: 39em;
+          left: initial;
+          bottom: initial;
+          transform: translateY(-225%);
+        }
+
+        .toggle-options-open {
+          transform: translateY(-100%);
+        }
     `;
   }
 
@@ -137,48 +190,49 @@ export class ActivityOptionsPanel extends LitElement {
     };
   }
 
-  _handleOptions() {
-    const optionsObject = {};
-    if (this.activityType) optionsObject.type = this.activityType;
-    if (this.participants) optionsObject.participants = this.participants;
-    if (this.accessibility) optionsObject.maxaccessibility = this.accessibility;
-    if (this.price) optionsObject.maxprice = this.price;
+  firstUpdated() {
+    super.firstUpdated();
 
-    console.log(optionsObject);
+    this.selectType = this.shadowRoot.querySelector("#type-select");
+    this.selectType.addEventListener("change", (e) => this._setType(e));
 
-    return optionsObject;
-  }
+    this.participantsInput = this.shadowRoot.querySelector(
+      "#participants-input"
+    );
+    this.participantsInput.addEventListener("change", (e) =>
+      this._setParticipants(e)
+    );
 
-  _resetOptions() {
-    this.activityType =
-      this.participants =
-      this.accessibility =
-      this.price =
-        null;
-    this.requestUpdate();
-  }
+    this.accessibilityInput = this.shadowRoot.querySelector(
+      "#accessibility-input"
+    );
+    this.accessibilityInput.addEventListener("change", (e) =>
+      this._setAccessibility(e)
+    );
 
-  _toggleOptionsPanel() {
-    this.isOpen = !this.isOpen;
-  }
+    this.priceInput = this.shadowRoot.querySelector("#price-input");
+    this.priceInput.addEventListener("change", (e) => this._setPrice(e));
 
-  connectedCallback() {
-    super.connectedCallback();
+    this.toggleOptions = this.shadowRoot.querySelector(".toggle-options");
+    this.applyButton = this.shadowRoot.querySelector("#apply-button");
+
+    [this.toggleOptions, this.applyButton].forEach((element) => {
+      element.addEventListener("click", (e) => this._toggleOptionsPanel(e));
+    });
+
+    this.resetButton = this.shadowRoot.querySelector("#reset-button");
+    this.resetButton.addEventListener("click", (e) => this._resetOptions(e));
   }
 
   render() {
     return html`
-      <button
-        class="toggle-options"
-        @click="${(e) => this._toggleOptionsPanel(e)}"
-      >
-        OPTIONS
-      </button>
+      <button class="toggle-options">OPTIONS</button>
       <div class="options-panel ${this.isOpen ? "toggle-options-open" : ""}">
+        <h2 class="options-panel-title">OPTIONS</h2>
         <div id="type-option" class="input-wrapper">
           <label for="type">Type </label>
-          <select name="type" id="type" @change="${(e) => this._setType(e)}">
-            <option>Select a type</option>
+          <select name="type" id="type-select">
+            <option disabled selected>Select a type</option>
             ${this.typeOptions.map((option) => {
               const capitalizedOption =
                 option.charAt(0).toUpperCase() + option.substring(1);
@@ -191,74 +245,98 @@ export class ActivityOptionsPanel extends LitElement {
         <div id="participants-option" class="input-wrapper">
           <label for="participants">Participants</label>
           <input
-            id="participants"
+            id="participants-input"
             type="range"
             step="1"
             min="1"
             max="5"
             name="participants"
-            value="${this.participants || "0"}"
-            @change="${(e) => this._setParticipants(e)}"
           />
-          <span>${this.participants || "Unset"}</span>
+          <span class="parameter-info"
+            ><div class="emoji">👤</div>
+            ${this.participants || html`<p>Unset</p>`}</span
+          >
         </div>
         <div id="accessibility-option" class="input-wrapper">
           <label for="accessibility">Accessibility</label>
           <input
-            id="accessibility"
+            id="accessibility-input"
             type="range"
             min="0.0"
             max="1.0"
             step="0.01"
-            value="${this.accessibility || 1.0}"
             name="accessibility"
-            @change="${(e) => this._setAccessibility(e)}"
           />
-          <span
-            >${this.accessibility
+          <span class="parameter-info"
+            ><span class="emoji">♿</span>${this.accessibility
               ? `${Number(this.accessibility * 100).toFixed()}%`
-              : "Unset"}</span
+              : html`<p>Unset</p>`}</span
           >
         </div>
         <div id="price-option" class="input-wrapper">
           <label for="price">Price</label>
           <input
-            id="price"
+            id="price-input"
             type="range"
             min="0.0"
             max="1.0"
             step="0.01"
-            value="${this.price || 0.0}"
             name="price"
-            @change="${(e) => this._setPrice(e)}"
           />
-          <span
-            >${!!+this.price
+          <span class="parameter-info"
+            ><span class="emoji">💰 </span> ${!!+this.price
               ? `${Number(this.price * 100).toFixed()} %`
               : this.price === "0"
-              ? "FREE"
-              : "Unset"}</span
+              ? html`<p><b>FREE</b></p>`
+              : html`<p>Unset</p>`}</span
           >
         </div>
         <div class="buttons-wrapper">
-          <button @click="${this._toggleOptionsPanel}">APPLY</button>
-          <button @click="${(e) => this._resetOptions(e)}">RESET</button>
+          <button id="apply-button">APPLY</button>
+          <button id="reset-button">RESET</button>
         </div>
       </div>
     `;
+  }
+
+  _handleOptions() {
+    const optionsObject = {};
+
+    if (this.activityType) optionsObject.type = this.activityType;
+    if (this.participants) optionsObject.participants = this.participants;
+    if (this.accessibility) optionsObject.maxaccessibility = this.accessibility;
+    if (this.price) optionsObject.maxprice = this.price;
+
+    return optionsObject;
+  }
+
+  _toggleOptionsPanel() {
+    this.isOpen = !this.isOpen;
   }
 
   _setType(e) {
     this.activityType = e.srcElement.value;
   }
   _setParticipants(e) {
-    this.participants = e.srcElement.value;
+    this.value = e.srcElement.value;
+    this.participants = this.value;
   }
   _setAccessibility(e) {
-    this.accessibility = e.srcElement.value;
+    this.value = e.srcElement.value;
+    this.accessibility = this.value;
   }
   _setPrice(e) {
-    this.price = e.srcElement.value;
+    this.value = e.srcElement.value;
+    this.price = this.value;
+  }
+
+  _resetOptions() {
+    this.activityType =
+      this.participants =
+      this.accessibility =
+      this.price =
+        null;
+    this.requestUpdate();
   }
 }
 
