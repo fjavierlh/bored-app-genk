@@ -25,9 +25,10 @@ export class ActivityCard extends LitElement {
         height: 100%;
         overflow-y: auto;
         overflow-x: hidden;
+        padding: 1em;
 
         display: flex;
-        flex-flow: column wrap;
+        flex-flow: row wrap;
         justify-content: center;
         align-items: center;
 
@@ -56,18 +57,18 @@ export class ActivityCard extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.4em;
+        font-size: 1.1em;
         line-height: 1.5;
         background-color: var(--color-primary);
+        padding-bottom: 0.5em;
         min-height: 100px;
-        margin-bottom: 0.5em;
       }
 
       #activity-type {
         display: flex;
         align-items: baseline;
         flex: 1 100%;
-        margin-bottom: 1em;
+        margin-bottom: .5em;
       }
 
       #activity-type dd {
@@ -83,7 +84,6 @@ export class ActivityCard extends LitElement {
       #activity-accessibility,
       #activity-link {
         margin-top: auto;
-        margin-bottom: 0.55em;
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
@@ -96,10 +96,14 @@ export class ActivityCard extends LitElement {
         color: var(--color-tertiary);
       }
 
+      dl dt,
+      dl dd {
+        font-size: 1rem;
+      }
+
       .main-image {
-        width: 65%;
+        width: 60%;
         max-width: 275px;
-        margin-bottom: 1em;
       }
 
       .main-button {
@@ -121,7 +125,7 @@ export class ActivityCard extends LitElement {
       .default-text {
         flex: 1 100%;
         max-width: 20em;
-
+        font-size: .9em;
         text-align: center;
       }
 
@@ -131,10 +135,10 @@ export class ActivityCard extends LitElement {
         flex-flow: row wrap;
         justify-content: center;
         align-items: center;
-        margin: 0.5em 2em;
+        margin-top: 0.5em;
 
-        max-width: 460px;
-        min-height: 530px;
+        max-width: 600px;
+        min-height: 491px;
         background-color: var(--color-primary);
         box-shadow: 0px 1px 5px;
       }
@@ -198,7 +202,8 @@ export class ActivityCard extends LitElement {
           padding: 1em;
         }
         .activity-card {
-          width: 100%;
+          width: 92%;
+          margin: 0 auto;
         }
 
         .activity-data {
@@ -212,14 +217,13 @@ export class ActivityCard extends LitElement {
         }
 
         .main-button {
-          margin-top: 3em;
+          margin-top: 1em;
           max-width: 53em;
         }
 
         dl,
         .default-text {
           flex: 1 100%;
-
           margin: 0 auto;
         }
 
@@ -243,6 +247,14 @@ export class ActivityCard extends LitElement {
           font-size: 1.2rem;
         }
       }
+
+      @media (max-width: 320px) {
+         #activity dd {
+           min-height: auto;
+         }
+         .loading-wrapper {
+          min-height: 342px;
+         }
     `;
   }
 
