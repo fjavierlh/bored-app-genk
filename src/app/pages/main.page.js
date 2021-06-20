@@ -12,7 +12,7 @@ export class MainPage extends LitElement {
         display: flex;
         position: absolute;
         width: 100%;
-        min-height: 90%;
+        min-height: 80%;
         flex-flow: column wrap;
         justify-content: center;
         align-items: center;
