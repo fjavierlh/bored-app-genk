@@ -1,57 +1,65 @@
 import { css, html, LitElement } from "lit";
 import { ActivityService } from "../services/activity.service";
+
 import questionImage from "../img/question.webp";
+import recreationalImage from "../img/recreational.webp";
+import relaxationImage from "../img/relaxation.webp";
+import busyworkImage from "../img/busywork.webp";
+import charityImage from "../img/charity.webp";
+import cookingImage from "../img/cooking.webp";
+import educationImage from "../img/education.webp";
+import musicImage from "../img/music.webp";
+import diyImage from "../img/diy.webp";
+import socialImage from "../img/social.webp";
 
 export class ActivityCard extends LitElement {
   static get styles() {
     return css`
       :host {
         display: block;
-        min-height: 100%;
+        width: 100%;
       }
 
       .activity-card {
-        display: flex;
-        position: absolute;
-        flex-flow: column wrap;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 1em;
-        height: 85%;
+        display: block;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
 
-        /* background-color: lavender; */
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+
+        transition: opacity 3s linear;
       }
 
-      dl {
+      .activity-data {
         display: flex;
         flex-flow: row wrap;
         width: 100%;
-        margin: 0;
+        max-width: 25em;
+        margin: 1em;
       }
 
-      dt {
-        display: block;
-      }
-
-      dd {
+      .activity-data dd {
         margin-left: 0.5em;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        font-family: var(--font-primary);
       }
 
       #activity {
         flex: 1 100%;
-        background-color: #fff;
+        background-color: var(--color-primary);
       }
 
       #activity dd {
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 1.4em;
         line-height: 1.5;
-        font-size: 1.1rem;
-        background-color: #fff;
-        min-height: 3.6em;
+        background-color: var(--color-primary);
+        min-height: 100px;
         margin-bottom: 0.5em;
       }
 
@@ -61,83 +69,222 @@ export class ActivityCard extends LitElement {
         flex: 1 100%;
         margin-bottom: 1em;
       }
+
       #activity-type dd {
-        font-size: 1rem;
+        font-size: 0.8rem;
         padding: 0.5em 1em;
         border-radius: 0.5em;
-        color: #fff;
-        text-shadow: 1px 1px 5px #000;
+        color: var(--color-primary);
+        text-shadow: 1px 1px 5px var(--color-tertiary);
       }
 
       #activity-participants,
       #activity-price,
       #activity-accessibility,
       #activity-link {
+        margin-top: auto;
+        margin-bottom: 0.55em;
         display: flex;
+        flex-flow: row wrap;
         justify-content: center;
-        flex: 1 0%;
-        min-height: 2em;
+        font-size: 1.1rem;
+        flex: 1;
+      }
+
+      #activity-link a {
+        text-decoration: none;
+        color: var(--color-tertiary);
       }
 
       .main-image {
         width: 65%;
-        max-width: 400px;
+        max-width: 275px;
+        margin-bottom: 1em;
       }
 
       .main-button {
-        background-color: #000;
-        color: #fff;
+        flex: 1 100%;
+        background-color: var(--color-tertiary);
+        color: var(--color-primary);
         padding: 2em 4em;
+        max-width: 20em;
         font-family: inherit;
+        margin-top: 1em;
+        margin-bottom: 1em;
         font-size: 1rem;
+
+        border: none;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .default-text {
+        flex: 1 100%;
+        max-width: 20em;
+
+        text-align: center;
+      }
+
+      .loading-wrapper {
+        flex: 1 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 0.5em 2em;
+
+        max-width: 460px;
+        min-height: 530px;
+        background-color: var(--color-primary);
+        box-shadow: 0px 1px 5px;
+      }
+
+      .loading-card {
+        animation: 1s activityCardInOut;
+      }
+
+      @keyframes activityCardInOut {
+        10% {
+          opacity: 0;
+          transform: translateX(140%);
+        }
+
+        11% {
+          opacity: 0;
+          transform: translateX(-140%);
+        }
+      }
+
+      .busywork {
+        background-color: var(--color-busywork);
+      }
+
+      .charity {
+        background-color: var(--color-charity);
+      }
+
+      .cooking {
+        background-color: var(--color-cooking);
+      }
+
+      .diy {
+        background-color: var(--color-diy);
       }
 
       .education {
-        background-color: #fac76b;
+        background-color: var(--color-education);
+      }
+
+      .music {
+        background-color: var(--color-music);
       }
 
       .recreational {
-        background-color: #e96a63;
+        background-color: var(--color-recreational);
       }
-      .social {
-        background-color: #e96186;
-      }
-      .diy {
-        background-color: #cb4333;
-      }
-      .charity {
-        background-color: #f49863;
-      }
-      .cooking {
-        background-color: #6e5b98;
-      }
+
       .relaxation {
-        background-color: #9b86bd;
+        background-color: var(--color-relaxation);
       }
-      .music {
-        background-color: #c37d5c;
+
+      .social {
+        background-color: var(--color-social);
       }
-      .busywork {
-        background-color: #9ccec9;
+
+      @media (min-width: 812px) {
+        .loading-wrapper {
+          flex-wrap: nowrap;
+          max-width: 61em;
+          padding: 1em;
+        }
+        .activity-card {
+          width: 100%;
+        }
+
+        .activity-data {
+          margin: 0;
+        }
+
+        .main-image {
+          width: 100%;
+          margin-right: 1em;
+          max-width: 400px;
+        }
+
+        .main-button {
+          margin-top: 3em;
+          max-width: 53em;
+        }
+
+        dl,
+        .default-text {
+          flex: 1 100%;
+
+          margin: 0 auto;
+        }
+
+        dl dt,
+        dl dd {
+          font-size: 1.5rem;
+        }
+
+        #activity dd {
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.5em;
+          line-height: 1.5;
+          min-width: auto;
+        }
+        #activity-type {
+          margin-bottom: 3em;
+        }
+
+        #activity-type dd {
+          font-size: 1.2rem;
+        }
       }
     `;
   }
 
   static get properties() {
     return {
+      isLoading: { type: Boolean },
       activity: { type: Object },
+      typeActivity: { type: String },
       service: { type: Object },
       mainImage: { type: String },
+      typeImages: { type: Object },
+      disableButton: { type: Boolean },
     };
   }
 
   constructor() {
     super();
     this.activityService = new ActivityService();
+    this.typeImages = {
+      busywork: busyworkImage,
+      charity: charityImage,
+      cooking: cookingImage,
+      diy: diyImage,
+      education: educationImage,
+      music: musicImage,
+      recreational: recreationalImage,
+      relaxation: relaxationImage,
+      social: socialImage,
+    };
+    this.isLoading = false;
+    this.mainButton = null;
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+    this.mainButton = this.shadowRoot.querySelector(".main-button");
+    console.log("firstIUpdate: " + this.mainButton);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    console.log("connectedCallback: " + this.mainButton);
     this.activity = { data: {} };
     this.mainImage = questionImage;
   }
@@ -147,51 +294,66 @@ export class ActivityCard extends LitElement {
     return activityOptionsPanel._handleOptions();
   }
 
+  _setMainImage(type) {
+    this.mainImage = this.typeImages[type] || questionImage;
+  }
+
   render() {
     const { activity, type, participants, price, link, key, accessibility } = {
       ...this.activity.data,
     };
+    this._setMainImage(type);
     const hasProperties = Object.keys(this.activity.data).length !== 0;
+
     return html`
       <div class="activity-card">
-        <img class="main-image" src="${this.mainImage}" />
-        ${hasProperties
-          ? html`<dl id="${key}">
-            <div id="activity">
-              <dt>Activity</dt>
-              <dd>${activity}</dd>
-            </div>
-            <div id="activity-type">
-              <dt>Type</dt>
-              <dd class="${type}">${type}</dd>
-            </div>
-            
-            <div id="activity-participants">
-              <dt>👤</dt>
-              <dd>${participants}</dd>
-            </div>
-            <div id="activity-price">
-              <dt>💰</dt>
-              <dd>${
-                !!+price ? `${Number(price * 100).toFixed()} %` : "FREE"
-              }</dd>
-            </div>
-            <div id="activity-accessibility">
-              <dt></dt>&#9855;</dt>
-              <dd>${Number(accessibility * 100).toFixed()}%</dd>
-            </div>
-            ${
-              link
-                ? html` <div id="activity-link">
-                    <dt>🔗</dt>
-                    <dd><a href="${link}" target="_blank">URL</a></dd>
-                  </div>`
-                : ""
-            }
-          </dl>`
-          : html`<h1>Press the button</h1>`}
+        <div class="loading-wrapper ${this.isLoading ? "loading-card" : ""}">
+          <img class="main-image" src="${this.mainImage}" />
+          ${hasProperties
+            ? html`<dl id="${key}" class="activity-data">
+                <div id="activity">
+                  <dt class="activity-data-tag">Activity</dt>
+                  <dd>${activity}</dd>
+                </div>
+                <div id="activity-type">
+                  <dt class="activity-data-tag">Type</dt>
+                  <dd class="${type}">${type}</dd>
+                </div>
 
-        <button class="main-button" @click="${() => this._getActivity()}">
+                <div id="activity-participants">
+                  <dt>👤</dt>
+                  <dd>${participants}</dd>
+                </div>
+                <div id="activity-price">
+                  <dt>💰</dt>
+                  <dd>
+                    ${!!+price ? `${Number(price * 100).toFixed()} %` : "FREE"}
+                  </dd>
+                </div>
+                <div id="activity-accessibility">
+                  <dt>♿</dt>
+                  <dd>${Number(accessibility * 100).toFixed()}%</dd>
+                </div>
+                ${link
+                  ? html` <div id="activity-link">
+                      <dt>🔗</dt>
+                      <dd><a href="${link}" target="_blank">URL</a></dd>
+                    </div>`
+                  : ""}
+              </dl>`
+            : html` <div
+                class="default-text ${this.isLoading ? "loading-card" : ""}"
+              >
+                <h1>Hi there!👋</h1>
+                <h2>Press the button to get some ramdom activity</h2>
+              </div>`}
+        </div>
+
+        <button
+          class="main-button"
+          ?disabled="${this.disableButton}"
+          @click="${() => this._loadActivity()}"
+        >
           Give me activity
         </button>
 
@@ -200,9 +362,18 @@ export class ActivityCard extends LitElement {
     `;
   }
 
+  _loadActivity() {
+    this.disableButton = true;
+    this.isLoading = true;
+    this._getActivity();
+    setTimeout(() => {
+      this.disableButton = false;
+      this.isLoading = false;
+    }, 1000);
+  }
+
   async _getActivity() {
     const options = this._getOptionsPanels();
-    console.log(options);
     this.activity = await this.activityService.getRandomActivity(options);
   }
 }
