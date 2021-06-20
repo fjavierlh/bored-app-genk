@@ -65,6 +65,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@fjavierlh/notification-message": "^1.0.0",
     "@vaadin/router": "^1.7.4",
     "axios": "^0.21.1",
     "lit": "^2.0.0-rc.2"
