@@ -105,7 +105,7 @@ html {
 }
 
 /*Landscape orientation prevent*/
-@media only screen and (max-width: 812px) and (orientation: landscape) {
+@media only screen and (max-width: 480px) and (orientation: landscape) {
   .container {
     display: none;
   }

@@ -61,7 +61,7 @@ export class ActivityCard extends LitElement {
         line-height: 1.5;
         background-color: var(--color-primary);
         padding-bottom: 0.5em;
-        min-height: 100px;
+        min-height: 60px;
       }
 
       #activity-type {
@@ -138,7 +138,7 @@ export class ActivityCard extends LitElement {
         margin-top: 0.5em;
 
         max-width: 600px;
-        min-height: 491px;
+        min-height: 450px;
         background-color: var(--color-primary);
         box-shadow: 0px 1px 5px;
       }
