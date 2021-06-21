@@ -53,7 +53,6 @@ export class WelcomePage extends LitElement {
       }
 
       .welcome-message h1 {
-        /* height: 100%; */
         font-size: 2.8rem;
       }
       .welcome-message h1 span {
@@ -124,14 +123,14 @@ export class WelcomePage extends LitElement {
 
   render() {
     return html`
-      <div class="welcome-message">
+      <div class="welcome-message" >
         <img class="main-image" src="${this.image}" />
         <h1>
           ${this.bigTitle.substring(0, 5)}<span
             >${this.bigTitle.charAt(this.bigTitle.length - 1)}</span
           >
         </h1>
-        <a id="push-button" href="/main-page">Push</a>
+        <a id="push-button" data-cy="push-button-enter" href="/main-page">Push</a>
       </div>
     `;
   }

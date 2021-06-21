@@ -200,6 +200,7 @@ export class ActivityCard extends LitElement {
           flex-wrap: nowrap;
           max-width: 61em;
           padding: 1em;
+          min-height: auto;
         }
         .activity-card {
           width: 92%;
@@ -291,12 +292,10 @@ export class ActivityCard extends LitElement {
   firstUpdated() {
     super.firstUpdated();
     this.mainButton = this.shadowRoot.querySelector(".main-button");
-    console.log("firstIUpdate: " + this.mainButton);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    console.log("connectedCallback: " + this.mainButton);
     this.activity = { data: {} };
     this.mainImage = questionImage;
   }
@@ -363,6 +362,7 @@ export class ActivityCard extends LitElement {
 
         <button
           class="main-button"
+          data-cy="new-activity-button"
           ?disabled="${this.disableButton}"
           @click="${() => this._loadActivity()}"
         >

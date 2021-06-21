@@ -36,7 +36,7 @@ export class MainPage extends LitElement {
 
   render() {
     return html`
-    <div class="main-content">
+    <div class="main-content" data-cy="main-content">
       <activity-card></activity-card>
     </div>
       `;

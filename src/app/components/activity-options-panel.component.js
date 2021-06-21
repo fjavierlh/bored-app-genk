@@ -238,7 +238,7 @@ export class ActivityOptionsPanel extends LitElement {
 
   render() {
     return html`
-      <button class="toggle-options">OPTIONS</button>
+      <button class="toggle-options" data-cy="options-toggle">OPTIONS</button>
       <div class="options-panel ${this.isOpen ? "toggle-options-open" : ""}">
         <h2 class="options-panel-title">OPTIONS</h2>
         <div id="type-option" class="input-wrapper">
@@ -296,15 +296,15 @@ export class ActivityOptionsPanel extends LitElement {
             name="price"
           />
           <span class="parameter-info"
-            ><span class="emoji">💰 </span> ${!!+this.price
-              ? `${Number(this.price * 100).toFixed()} %`
+            ><span class="emoji">💰</span> ${!!+this.price
+              ? `${Number(this.price * 100).toFixed()}%`
               : this.price === "0"
               ? html`<p><b>FREE</b></p>`
               : html`<p>Unset</p>`}</span
           >
         </div>
-        <div class="buttons-wrapper">
-          <button id="apply-button">APPLY</button>
+        <div class="buttons-wrapper" data-cy="options-button">
+          <button id="apply-button" >APPLY</button>
           <button id="reset-button">RESET</button>
         </div>
       </div>
@@ -316,7 +316,6 @@ export class ActivityOptionsPanel extends LitElement {
     const notificationMessage = this.shadowRoot.getElementById(
       "notification-message"
     );
-    console.log(notificationMessage);
     return notificationMessage._pushNotification(message, type, position);
   }
 

@@ -182,7 +182,6 @@ export class MainLayout extends LitElement {
 
   firstUpdated() {
     this.navLinks = [...this.renderRoot.querySelectorAll("#nav ul li a")];
-    console.log(this.navLinks);
     this.navLinks.forEach((link) =>
       link.addEventListener("click", (e) => this._toggleMenu(e))
     );
@@ -192,7 +191,6 @@ export class MainLayout extends LitElement {
   }
 
   _toggleMenu() {
-    console.log(window.width);
     this.openNav = !this.openNav;
   }
 
