@@ -1,3 +1,4 @@
-# webpack vanilla starter 🚀
+# BORED? App 
 
-A simple SPA vanilla starter based on [Rubén Aguilera tutorial](https://dev.to/raguilera82/montar-spa-de-cero-con-vanilla-y-jest-3odb) 
+A simple vanilla JS app to get ramdon activities from API rest
+
