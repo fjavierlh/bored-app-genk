@@ -7,7 +7,7 @@ export class ActivityRepository {
       minaccessibility: 0,
     };
 
-    this.API_URL = new URL("http://www.boredapi.com/api/activity/");
+    this.API_URL = new URL("https://www.boredapi.com/api/activity/");
   }
 
   async getRandomActivity(URLParams) {
