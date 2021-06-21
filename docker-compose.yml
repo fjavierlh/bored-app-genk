@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+    app:
+        image: "bored-app:1.0.0"
+        build: .
+        ports:
+            - "80:80"
